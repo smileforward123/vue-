@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <script src="js/vue.js"></script>
+    <body>
+        <div id="app">
+            <h2>自定义下拉框</h2>
+            <customselect btn="查询"></customselect> 
+        </div>
+        <script>
+            Vue.component("customselect",{
+                data:function(){
+                    return {
+                        selectShow:false
+                    }
+                },
+                props:["btn"],
+                template:`<section class="warp">
+                    <div class="searchIpt clearFix">
+                        <div class="clearFix">
+                            <input type="text" class="keyWord" value="" v-on:click="selectShow = !selectShow"/>
+                            <input type="button" v-bind:value="btn">
+                            <span></span>
+                        </div>
+                        <customList v-show="selectShow"></customList>
+                    </div>
+                </section>`
+            });
+            //子组件：
+            Vue.component("customList",{
+                template:'<ul class="list">'+
+                            '<li>html+css</li>'+
+                            '<li>html5+css3</li>'+
+                            '<li>javascript</li>'+
+                            '<li>angular</li>'+
+                            '<li>react</li>'+
+                            '<li>vue</li>'+
+                            '<li>jquery</li>'+
+                            '<li>nodejs</li>'+
+                        '</ul>'
+            })
+            new Vue({
+                el:"#app"
+            })
+        </script>
+    </body>
+</html>

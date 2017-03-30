@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <script src="js/vue.js"></script>
+    <body>
+        <div id="app">
+            <h2>这是一个自定义组件单向数据流</h2>
+            <p>{{count}}</p>
+            <custom-div v-bind:count='count'@increment-click="countHandle"></custom-div>
+        </div>
+        <script>
+            /*
+                prop 是单向绑定的：当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改了父组件的状态——这会让应用的数据流难以理解。
+                每次父组件更新时，子组件的所有 prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop 。如果你这么做了，Vue 会在控制台给出警告。
+                为什么我们会有修改prop中数据的冲动呢？通常是这两种原因：
+                prop 作为初始值传入后，子组件想把它当作局部数据来用；
+                prop 作为初始值传入，由子组件处理成其它数据输出
+
+             */
+            Vue.component("custom-div",{
+                template:"<div><h3>这是一个自定义组件</h3><input type='button' value='改变count'v-on:click='changeCount'>{{increaseCount}}</div>",
+                props:["count"],
+                data:function(){
+                    return {
+                        increaseCount:this.count
+                    }
+                },
+                methods:{
+                    changeCount:function(){
+                        this.increaseCount++;//当子组件改变时去触发父组件的事件：
+                        this.$emit("increment-click");//去触发父组件的事件：
+                    }
+                }
+            })
+
+            new Vue({
+                el:"#app",
+                data:{
+                    count:0
+                },
+                methods:{
+                    countHandle:function(){
+                        console.log("我触发了父级组件")
+                        this.count++;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

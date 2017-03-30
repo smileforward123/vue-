@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <script src="js/vue.js"></script>
+    <body>
+    <div id="app">
+        <h2>自定义组件</h2>
+        <custom-div>
+            <!--写在自定义标签中的内容可以替换slot标签的内容!-->
+                
+                    <span slot="one">这是第一个消息</span>
+                
+                    <div slot="two">
+                        slot分发内容
+                    </div>
+                    <template slot="two">
+                        <span>这是第二个消息</span><span>这是第二个消息</span><span>这是第二个消息</span><span>这是第二个消息</span><span>这是第二个消息</span><span>这是第二个消息</span>
+                    </template>
+                    
+                    <span slot="three">这是第三个消息</span>
+                
+        </custom-div>
+    </div>
+    <script>
+        Vue.component("custom-div",{
+            template:"<div>"+
+               "<slot name='one'></slot><slot name='two'></slot><slot name='three'></slot>"+
+            "</div>"
+        })
+         new Vue({
+            el:"#app",
+
+         })
+    </script>
+    </body>
+</html>

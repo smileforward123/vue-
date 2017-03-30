@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <script src="js/vue.js"></script>
+    <body>
+        <div id="app">
+            <h2>这是一个自定义组件单向数据流</h2>
+            <p>{{count}}</p>
+            <custom-div v-bind:count='count'@increment-click="countHandle"></custom-div>
+        </div>
+        <script>
+            /*
+                我们可以为组件的 props 指定验证规格。如果传入的数据不符合规格，Vue 会发出警告。当组件给其他人使用时，这很有用。
+
+             */
+            Vue.component("custom-div",{
+                template:"<div><h3>这是一个自定义组件</h3><input type='button' value='改变count'v-on:click='changeCount'>{{increaseCount}}</div>",
+                props:{
+                    count:{
+                        type: [String,Number],
+                        required: true,
+                        default:100,
+                        validator: function (value) {
+                            return value > 10
+                        }
+                    }
+                },
+                data:function(){
+                    return {
+                        increaseCount:this.count
+                    }
+                },
+                methods:{
+                    changeCount:function(){
+                        this.increaseCount++;//当子组件改变时去触发父组件的事件：
+                        this.$emit("increment-click");//去触发父组件的事件：
+                    }
+                }
+            })
+
+            new Vue({
+                el:"#app",
+                data:{
+                   count:0
+                },
+                methods:{
+                    countHandle:function(){
+                        console.log("我触发了父级组件")
+                        this.count++;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

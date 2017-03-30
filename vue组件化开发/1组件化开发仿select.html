@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="css/style.css" rel="stylesheet">
+
+    </head>
+    <script type="text/javascript" src="js/vue.js"></script>
+    
+    <body>
+        <div id="app">
+            <h2>自定义的下拉框</h2>
+            <custom-select btn="查询"></custom-select>
+            
+        </div>
+        <div id="app1">
+            <h2>自定义的下拉框2</h2>
+            <custom-select btn="搜索"></custom-select>
+        </div>
+        <script>
+            //使用组件必须注册组件：
+            //组件注册分全局注册、局部注册：
+            //全局注册;
+            /*
+            Vue.component(tagName, options)
+
+
+             */
+            /*
+                局部注册：
+                不必在全局注册每个组件。通过使用组件实例选项注册，可以使组件仅在另一个实例/组件的作用域中可用：
+                var Child = {
+                  template: '<div>A custom component!</div>'
+                }
+                new Vue({
+                  // ...
+                  components: {
+                    // <my-component> 将只在父模板可用
+                    'my-component': Child
+                  }
+                })
+             */
+           Vue.component("custom-select",{
+             template:`<section class="warp">
+                    <div class="searchIpt clearFix">
+                        <div class="clearFix">
+                            <input type="text" class="keyWord" value="" />
+                            <input type="button" value="查询">
+                            <span></span>
+                        </div>
+                        <ul class="list">
+                            <li>html+css</li>
+                            <li>html5+css3</li>
+                            <li>javascript</li>
+                            <li>angular</li>
+                            <li>react</li>
+                            <li>vue</li>
+                            <li>jquery</li>
+                            <li>nodejs</li>
+                        </ul>
+                    </div>
+                </section>`
+           })
+           //创建vue实例;
+            new Vue({
+                el:"#app",
+                
+            })
+            //局部注册;
+            new Vue({
+                el:"#app1",
+                "components":select
+            })
+            var select={
+                template:`<section class="warp">
+                    <div class="searchIpt clearFix">
+                        <div class="clearFix">
+                            <input type="text" class="keyWord" value="" />
+                            <input type="button" value="查询">
+                            <span></span>
+                        </div>
+                        <ul class="list">
+                            <li>html+css</li>
+                            <li>html5+css3</li>
+                            <li>javascript</li>
+                            <li>angular</li>
+                            <li>react</li>
+                            <li>vue</li>
+                            <li>jquery</li>
+                            <li>nodejs</li>
+                        </ul>
+                    </div>
+                </section>`
+            };
+
+           
+        </script>
+    </body>
+</html>

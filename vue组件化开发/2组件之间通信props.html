@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <script src="js/vue.js"></script>
+    <body>
+        <div id="app">
+            <h2>自定义下拉框</h2>
+            <customselect btn="查询"></customselect> 
+        </div>
+        <div id="app1">
+            <customselect btn="搜索"></customselect> 
+        </div>
+        <script>
+            //全局注册：
+            //对于自定义标签名，Vue.js 不强制要求遵循 W3C规则 （小写，并且包含一个短杠），尽管遵循这个规则比较好。
+            //确保在初始化根实例 之前 注册了组件：否则会报错：
+            //父子组件如何通信：
+            //组件实例的作用域是孤立的。这意味着不能(也不应该)在子组件的模板内直接引用父组件的数据。要让子组件使用父组件的数据，我们需要通过子组件的props选项,在父组件上绑定自定义属性：
+            Vue.component("customselect",{
+                props:["btn"],//子组件内部用props接收;
+                template:`<section class="warp">
+                    <div class="searchIpt clearFix">
+                        <div class="clearFix">
+                            <input type="text" class="keyWord" value="" />
+                            <input type="button" v-bind:value="btn">
+                            <span></span>
+                        </div>
+                        <ul class="list">
+                            <li>html+css</li>
+                            <li>html5+css3</li>
+                            <li>javascript</li>
+                            <li>angular</li>
+                            <li>react</li>
+                            <li>vue</li>
+                            <li>jquery</li>
+                            <li>nodejs</li>
+                        </ul>
+                    </div>
+                </section>`
+            });
+            new Vue({
+                el:"#app"
+            })
+            new Vue({
+                el:"#app1"
+            })
+           
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <script src="js/vue.js"></script>
+    <body>
+        <div id="app">
+            <div style="float: left;">
+                <h2>自定义的下拉框</h2>
+                <customselect btn="查询" v-bind:list="list1"></customselect>
+            </div>
+            <div style="float:left;">
+                <h2>自定义的下拉框2</h2>
+                <customselect btn="搜索" v-bind:list="list2"></customselect>
+            </div>
+        </div>
+        <script>
+            
+            Vue.component("customselect",{
+                data:function(){
+                    return {
+                        selectShow:false,
+                        val:""
+                    }
+                },
+                props:["btn","list"],
+                template:`<section class="warp">
+                    <div class="searchIpt clearFix">
+                        <div class="clearFix">
+                            <input type="text" class="keyWord" v-model:value="val" v-on:click="selectShow = !selectShow"/>
+                            <input type="button" v-bind:value="btn">
+                            <span></span>
+                        </div>
+                        <customList 
+                        v-show="selectShow"
+                        v-bind:list="list"
+                        v-on:receive="handle"
+                        >
+                        </customList>
+                    </div>
+                </section>`,
+                methods:{
+                    handle:function(val){
+                        this.val=val;//item 传过来 给val；
+
+                    }
+                }
+            });
+            //子组件：
+            Vue.component("customList",{
+                props:["list"],
+                template:'<ul class="list"><li v-for="item in list" v-on:click="selectValue(item)">{{item}}</li></ul>',
+                methods:{
+                    selectValue:function(item){
+                       
+                        //在子组件中有交互,子组件传递给父组件
+                        //告知父级，改变val的值，需要触发一个自定义事件
+                        console.log(item);
+                        this.$emit("receive",item);
+                    }
+                }
+
+            })
+            new Vue({
+                el:"#app",
+                data:{
+                    list1:["北京","上海","杭州"],
+                    list2:["17-02-17","17-02-18","17-02-19"]
+                }
+            });
+        </script>
+    </body>
+</html>

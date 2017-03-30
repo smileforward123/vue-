@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <script src="js/vue.js"></script>
+    <body>
+        <div id="app">
+            <h2>自定义下拉框</h2>
+            <table>
+                <tbody>
+                    <tr is="customselect"> </tr>
+                </tbody>
+            </table>
+            
+        </div>
+        <script>
+            /*
+                vue是在浏览器解析和标准化html后才能获取模板内容：
+                所以在渲染组件时限制了某些元素：
+                如果不符合w3c标准，就会报错：
+                方法:使用is属性扩展html标签；
+             */
+            Vue.component("customselect",{
+                data:function(){
+                    return {
+                        selectShow:false
+                    };
+                },
+                props:["btn"],//子组件内部用props接收;
+                template:`<section class="warp">
+                    <div class="searchIpt clearFix">
+                        <div class="clearFix">
+                            <input type="text" class="keyWord" value="" v-on:click="selectShow=!selectShow" />
+                            <input type="button" v-bind:value="btn">
+                            <span></span>
+                        </div>
+                        <ul class="list" v-show="selectShow">
+                            <li>html+css</li>
+                            <li>html5+css3</li>
+                            <li>javascript</li>
+                            <li>angular</li>
+                            <li>react</li>
+                            <li>vue</li>
+                            <li>jquery</li>
+                            <li>nodejs</li>
+                        </ul>
+                    </div>
+                </section>`
+            });
+            new Vue({
+                el:"#app"
+            })
+        </script>
+    </body>
+</html>
